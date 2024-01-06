@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Image Gallery</title>
+  <style>
+    #gallery {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Image Gallery</h1>
+  <div id="gallery"></div>
+
+  <script>
+    const galleryElement = document.getElementById("gallery");
+    let currentImageIndex = 0;
+
+    const fetchImages = async () => {
+      try {
+        const response = await fetch("https://api.github.com/repos/danielreid/image-gallery/contents/images");
+        const data = await response.json();
+        const imageFilenames = data.map((item) => item.name);
+        return imageFilenames;
+      } catch (error) {
+        console.error(error);
+        return [];
+      }
+    };
+
+    const displayImage = (imageFilenames) => {
+      galleryElement.innerHTML = ""; // Clear previous image
+
+      const imgElement = document.createElement("img");
+      imgElement.src = "images/" + imageFilenames[currentImageIndex];
+      galleryElement.appendChild(imgElement);
+    };
+
+    const nextImage = (imageFilenames) => {
+      currentImageIndex = (currentImageIndex + 1) % imageFilenames.length;
+      displayImage(imageFilenames);
+    };
+
+    const previousImage = (imageFilenames) => {
+      currentImageIndex = (currentImageIndex - 1 + imageFilenames.length) % imageFilenames.length;
+      displayImage(imageFilenames);
+    };
+
+    fetchImages()
+      .then((imageFilenames) => {
+        displayImage(imageFilenames);
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "ArrowRight") {
+            nextImage(imageFilenames);
+          } else if (event.key === "ArrowLeft") {
+            previousImage(imageFilenames);
+          }
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  </script>
+</body>
+</html>
