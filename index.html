@@ -18,7 +18,7 @@
 
     const fetchImages = async () => {
       try {
-        const response = await fetch("https://api.github.com/repos/danielreid/image-gallery/contents/images");
+        const response = await fetch("https://api.github.com/repos/TreeBucket/image-gallery/contents/images");
         const data = await response.json();
         const imageFilenames = data.map((item) => item.name);
         return imageFilenames;
