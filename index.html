@@ -10,7 +10,11 @@
 </head>
 <body>
   <h1>Image Gallery</h1>
-  <div style="grid: inherit;"><div id="leftArrow" style="grid-column: 1;">&lt;&lt;</div>  <div id="rightArrow" style="grid-column: 2;">&gt;&gt;</div></div>
+  
+  <div style="display: grid; ">
+    <div id="leftArrow"  style="grid-column: 1; width: 50px; place-self: center; font-size: 20pt;"><b>&lt;&lt;</b></div>
+    <div id="rightArrow" style="grid-column: 2; width: 50px; place-self: center; font-size: 20pt;"><b>&gt;&gt;</b></div>
+  </div>
 
   <div id="gallery" />
 
@@ -60,7 +64,7 @@
           }
         });
         document.getElementById("leftArrow").onclick = () => previousImage(imageFilenames)
-        document.getElementById("rightarrow").onclick = () => previousImage(imageFilenames)
+        document.getElementById("rightArrow").onclick = () => nextImage(imageFilenames)
       })
       .catch((error) => {
         console.error(error);
