@@ -10,7 +10,9 @@
 </head>
 <body>
   <h1>Image Gallery</h1>
-  <div id="gallery"></div>
+  <div style="grid: inherit;"><div id="leftArrow" style="grid-column: 1;">&lt;&lt;</div>  <div id="rightArrow" style="grid-column: 2;">&gt;&gt;</div></div>
+
+  <div id="gallery" />
 
   <script>
     const galleryElement = document.getElementById("gallery");
@@ -57,6 +59,8 @@
             previousImage(imageFilenames);
           }
         });
+        document.getElementById("leftArrow").onclick = () => previousImage(imageFilenames)
+        document.getElementById("rightarrow").onclick = () => previousImage(imageFilenames)
       })
       .catch((error) => {
         console.error(error);
