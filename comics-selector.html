@@ -9,7 +9,7 @@
   </style>
 </head>
 <body>
-  <h1>Image Gallery</h1>
+  <h1 id="title" />
   
   <div style="display: grid; ">
     <div id="leftArrow"  style="grid-column: 1; width: 50px; place-self: center; font-size: 20pt;"><b>&lt;&lt;</b></div>
@@ -22,13 +22,19 @@
     const galleryElement = document.getElementById("gallery");
     let currentImageIndex = 0;
 
+    const updateTitle = (title) => {
+      document.title = title;
+      document.getElementById("title").innerText = title;
+    }
+
     const fetchImages = async () => {
       try {
         const [url, accountName, repoName] = window.location.toString().match(/https:\/\/([^\.]*)\.github\.io\/([^\/]*)/)
         const params = new URLSearchParams(window.location.search);        
         const comic = params.get("comic");
+        const comicId = params.get("id");
 
-        const metaDataResponse = await fetch(`https://raw.githubusercontent.com/${accountName}/${repoName}/main/comics/${comic}/metadata.json`);
+        const metadataResponse = await fetch(`https://raw.githubusercontent.com/${accountName}/${repoName}/main/comics/${comic}/metadata.json`);
 
         const imagesResponse = await fetch(`https://api.github.com/repos/${accountName}/${repoName}/contents/comics/${comic}`);
         const data = await imagesResponse.json();
@@ -36,7 +42,13 @@
           .map((item) => item.name)
           .filter(item => item !== "metadata.json");
 
-        imageFilenames["metadata"] = await metaDataResponse.json();
+        const metadata = await metadataResponse.json();
+        imageFilenames["metadata"] = metadata;
+
+        updateTitle(metadata.title);
+        if(comicId) {
+          currentImageIndex = parseInt(comicId);
+        }
 
         return imageFilenames;
       } catch (error) {
@@ -51,6 +63,9 @@
       const imgElement = document.createElement("img");
       imgElement.src = `comics/${imageFilenames.metadata.folderName}/${imageFilenames[currentImageIndex]}`;
       galleryElement.appendChild(imgElement);
+      const url = new URL(window.location);
+      url.searchParams.set("id", currentImageIndex);
+      history.pushState({}, "", url);
     };
 
     const nextImage = (imageFilenames) => {
