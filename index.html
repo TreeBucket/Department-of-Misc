@@ -23,7 +23,7 @@
                 const data = await response.json();
                 const comicFolders = data.map((item) => item.name);
                 const metadatas = await Promise.all(comicFolders.map(folderName =>
-                fetch(`https://api.github.com/${accountName}/${repoName}/blob/main/comics/${folderName}/metadata.json`)));
+                fetch(`https://raw.githubusercontent.com/${accountName}/${repoName}/main/comics/${folderName}/metadata.json`)));
 
                 return metadatas.map((metadata, i) => ({...metadata, folderName: comicFolders[i]}))
             } catch (error) {
