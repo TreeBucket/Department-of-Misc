@@ -38,11 +38,17 @@
     fetchComics()
     .then((comics) => {
       comics.forEach(comic => {
-        console.log(comic)
-        const linkElement = document.createElement("li");
-        linkElement.innerHTML=`<a href="comics-selector/${comic.folderName}>${comic.title}</a>${comic.description}<p></p>`
-        console.log(linkElement)
-        comicsElement.appendChild(linkElement)
+        const liElement = document.createElement("li");
+        
+        const linkElement = document.createElement("a");
+        linkElement.href=`comics-selector/${comic.folderName}>${comic.title}`;
+        const pareElement = document.createElement("p");
+        pareElement.innerText = comic.description;
+
+        liElement.appendChild(linkElement)
+        liElement.appendChild(pareElement)
+        console.log(liElement)
+        comicsElement.appendChild(liElement)
       });
       
     })
