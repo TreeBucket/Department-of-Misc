@@ -23,8 +23,8 @@
         const data = await response.json();
         const comicFolders = data.map((item) => item.name);
         const metadatas = await Promise.all(comicFolders.map(async (folderName) => {
-          const response = await fetch(`https://raw.githubusercontent.com/${accountName}/${repoName}/main/comics/${folderName}/metadata.json`);
-          return response.json()
+          const metaDataResponse = await fetch(`https://raw.githubusercontent.com/${accountName}/${repoName}/main/comics/${folderName}/metadata.json`);
+          return metaDataResponse.json()
         })
         );
         
