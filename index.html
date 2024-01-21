@@ -1,51 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Tree Bucket comics</title>
-    <style>
-        #gallery {
-            text-align: center;
-        }
-    </style>
+  <title>Tree Bucket comics</title>
+  <style>
+    #gallery {
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-    <h1>Tree Bucket comics</h1>
-
-    <ul id="comic" />
-
-    <script>
-        const comicsElement = document.getElementById("comic");
-
-        const fetchComics = async () => {
-            try {
-                const [url, accountName, repoName] = window.location.toString().match(/https:\/\/([^\.]*)\.github\.io\/([^\/]*)/)
-                const response = await fetch(`https://api.github.com/repos/${accountName}/${repoName}/contents/comics`);
-                const data = await response.json();
-                const comicFolders = data.map((item) => item.name);
-                const metadatas = await Promise.all(comicFolders.map(folderName =>
-                fetch(`https://raw.githubusercontent.com/${accountName}/${repoName}/main/comics/${folderName}/metadata.json`)));
-
-                return metadatas.map((metadata, i) => ({...metadata, folderName: comicFolders[i]}))
-            } catch (error) {
-                console.error(error);
-                return [];
-            }
-        };
-
-        fetchComics()
-        .then((comics) => {
-            comics.forEach(comic => {
-                console.log(comic)
-                const linkElement = document.createElement("li");
-                linkElement.innerHTML=`<a href="comics-selector/${comic.folderName}>${comic.title}</a>${comic.description}<p></p>`
-                console.log(linkElement)
-                comicsElement.appendChild(linkElement)
-            });
-
+  <h1>Tree Bucket comics</h1>
+  
+  <ul id="comic" />
+  
+  <script>
+    const comicsElement = document.getElementById("comic");
+    
+    const fetchComics = async () => {
+      try {
+        const [url, accountName, repoName] = window.location.toString().match(/https:\/\/([^\.]*)\.github\.io\/([^\/]*)/)
+        const response = await fetch(`https://api.github.com/repos/${accountName}/${repoName}/contents/comics`);
+        const data = await response.json();
+        const comicFolders = data.map((item) => item.name);
+        const metadatas = await Promise.all(comicFolders.map(async (folderName) => {
+          response = await fetch(`https://raw.githubusercontent.com/${accountName}/${repoName}/main/comics/${folderName}/metadata.json`);
+          return response.json()
         })
-        .catch((error) => {
-            console.error(error);
-        });
-    </script>
+        );
+        
+        return metadatas.map((metadata, i) => ({...metadata, folderName: comicFolders[i]}))
+      } catch (error) {
+        console.error(error);
+        return [];
+      }
+    };
+    
+    fetchComics()
+    .then((comics) => {
+      comics.forEach(comic => {
+        console.log(comic)
+        const linkElement = document.createElement("li");
+        linkElement.innerHTML=`<a href="comics-selector/${comic.folderName}>${comic.title}</a>${comic.description}<p></p>`
+        console.log(linkElement)
+        comicsElement.appendChild(linkElement)
+      });
+      
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  </script>
 </body>
 </html>
