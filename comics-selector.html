@@ -26,7 +26,7 @@
       try {
         const [url, accountName, repoName] = window.location.toString().match(/https:\/\/([^\.]*)\.github\.io\/([^\/]*)/)
         const params = new URLSearchParams(window.location.search);        
-        const comic = params.comic;
+        const comic = params.get("comic");
 
         const metaDataResponse = await fetch(`https://raw.githubusercontent.com/${accountName}/${repoName}/main/comics/${comic}/metadata.json`);
 
