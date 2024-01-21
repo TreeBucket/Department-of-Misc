@@ -39,9 +39,10 @@
     .then((comics) => {
       comics.forEach(comic => {
         const liElement = document.createElement("li");
-        
         const linkElement = document.createElement("a");
-        linkElement.href=`comics-selector/${comic.folderName}>${comic.title}`;
+        linkElement.href=`comics-selector/${comic.folderName}`;
+        linkElement.innerText=`${comic.title}`;
+
         const pareElement = document.createElement("p");
         pareElement.innerText = comic.description;
 
