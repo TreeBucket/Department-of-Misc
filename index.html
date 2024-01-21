@@ -39,7 +39,7 @@
                 linkElement.innerHTML=`<a href="comics-selector/${comic.folderName}>${comic.title}</a>${comic.description}<p></p>`
                 return linkElement;
             });
-            galleryElement.append(elements)
+            comicsElement.append(elements)
 
         })
         .catch((error) => {
