@@ -65,7 +65,7 @@
       galleryElement.appendChild(imgElement);
       const url = new URL(window.location);
       url.searchParams.set("id", currentImageIndex);
-      history.pushState({}, "", url);
+      // history.pushState({}, "", url);
     };
 
     const nextImage = (imageFilenames) => {
