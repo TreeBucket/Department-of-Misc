@@ -25,9 +25,16 @@
     const fetchImages = async () => {
       try {
         const [url, accountName, repoName] = window.location.toString().match(/https:\/\/([^\.]*)\.github\.io\/([^\/]*)/)
-        const response = await fetch(`https://api.github.com/repos/${accountName}/${repoName}/contents/images`);
-        const data = await response.json();
+        const params = new URLSearchParams(window.location.search);        
+        const comic = params.comic;
+
+        const metaDataResponse = await fetch(`https://raw.githubusercontent.com/${accountName}/${repoName}/main/comics/${comic}/metadata.json`);
+
+        const imagesResponse = await fetch(`https://api.github.com/repos/${accountName}/${repoName}/contents/comics/${comic}`);
+        const data = await imagesResponse.json();
         const imageFilenames = data.map((item) => item.name);
+        imageFileNames.metadata = metaDataResponse.json();
+
         return imageFilenames;
       } catch (error) {
         console.error(error);
@@ -39,7 +46,7 @@
       galleryElement.innerHTML = ""; // Clear previous image
 
       const imgElement = document.createElement("img");
-      imgElement.src = "images/" + imageFilenames[currentImageIndex];
+      imgElement.src = `comics/${imageFilenames.metadata.folderName}/${imageFilenames[currentImageIndex]}`;
       galleryElement.appendChild(imgElement);
     };
 
