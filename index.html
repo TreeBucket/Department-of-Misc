@@ -34,10 +34,12 @@
 
         fetchComics()
         .then((comics) => {
-            const elements = comics.map(comic => {
+            comics.forEach(comic => {
+                console.log(comic)
                 const linkElement = document.createElement("li");
                 linkElement.innerHTML=`<a href="comics-selector/${comic.folderName}>${comic.title}</a>${comic.description}<p></p>`
-                return linkElement;
+                console.log(element)
+                comicsElement.appendChild(linkElement)
             });
             comicsElement.append(elements)
 
