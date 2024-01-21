@@ -9,7 +9,9 @@
   </style>
 </head>
 <body>
-  <h1 id="title" />
+  <div>
+    <h1 id="title" />
+  </div>
   
   <div style="display: grid; ">
     <div id="leftArrow"  style="grid-column: 1; width: 50px; place-self: center; font-size: 20pt;"><b>&lt;&lt;</b></div>
@@ -65,7 +67,7 @@
       galleryElement.appendChild(imgElement);
       const url = new URL(window.location);
       url.searchParams.set("id", currentImageIndex);
-      // history.pushState({}, "", url);
+      history.pushState({}, "", url);
     };
 
     const nextImage = (imageFilenames) => {
