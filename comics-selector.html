@@ -32,7 +32,9 @@
 
         const imagesResponse = await fetch(`https://api.github.com/repos/${accountName}/${repoName}/contents/comics/${comic}`);
         const data = await imagesResponse.json();
-        const imageFilenames = data.map((item) => item.name).filter(item => item !== "metadata.json");
+        const imageFilenames = data
+          .map((item) => item.name)
+          .filter(item => item !== "metadata.json");
 
         imageFilenames["metadata"] = await metaDataResponse.json();
 

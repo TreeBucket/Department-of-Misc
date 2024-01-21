@@ -28,7 +28,7 @@
         })
         );
         
-        return metadatas.map((metadata, i) => ({...metadata, folderName: comicFolders[i]}))
+        return metadatas;
       } catch (error) {
         console.error(error);
         return [];
