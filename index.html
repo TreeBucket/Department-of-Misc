@@ -41,7 +41,7 @@
       comics.forEach(comic => {
         const liElement = document.createElement("li");
         const linkElement = document.createElement("a");
-        linkElement.href=`comics-selector?comic=${comic.folderName}`;
+        linkElement.href=`comics-selector?comic=${comic.folderName}&id=0`;
         linkElement.innerText=`${comic.title}`;
 
         const pareElement = document.createElement("p");
