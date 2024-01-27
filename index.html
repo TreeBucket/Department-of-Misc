@@ -47,12 +47,13 @@
         const linkElement = document.createElement("a");
         
         linkElement.href=`comics-selector?comic=${comic.folderName}&id=0`;
-        linkElement.innerText=`${comic.title}`;
         if(comic.thumbnail) {
           const imgElement = document.createElement("img");
           imgElement.src = `comics/${comic.folderName}/thumbnail.png`
+          imgElement.style = "padding-right: 10px;"
           linkElement.appendChild(imgElement);
         }
+        linkElement.innerText=`${comic.title}`;
 
         const pareElement = document.createElement("p");
         pareElement.innerText = comic.description;
