@@ -53,7 +53,9 @@
           imgElement.style = "padding-right: 10px;"
           linkElement.appendChild(imgElement);
         }
-        linkElement.innerText=`${comic.title}`;
+        const spanElement = document.createElement("span");
+        spanElement.innerText=`${comic.title}`;
+        linkElement.appendChild(spanElement);
 
         const pareElement = document.createElement("p");
         pareElement.innerText = comic.description;
