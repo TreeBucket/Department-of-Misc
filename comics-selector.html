@@ -73,7 +73,7 @@
       imgElement.src = `comics/${imageFilenames.metadata.folderName}/${imageFilenames[currentImageIndex]}`;
       galleryElement.appendChild(imgElement);
 
-      fetchText(imageFilenames[currentImageIndex]).then(text => textElement.innerText = text);
+      fetchText(imageFilenames.metadata.folderName, imageFilenames[currentImageIndex]).then(text => textElement.innerText = text);
 
       const url = new URL(window.location);
       url.searchParams.set("id", currentImageIndex);
@@ -90,9 +90,9 @@
       displayImage(imageFilenames);
     };
 
-    const fetchText = async (comicName) => {
+    const fetchText = async (folderName, comicName) => {
       const txtfileName = comicName.split('.')[0] + '.txt'
-      const fileName = `comics/${imageFilenames.metadata.folderName}/${txtfileName}`;
+      const fileName = `comics/${folderName}/${txtfileName}`;
       try {
         const textResult = await fetch(`https://raw.githubusercontent.com/${accountName}/${repoName}/main/comics/${comic}/${fileName}`);
         return textResult.text();
