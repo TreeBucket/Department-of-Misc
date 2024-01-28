@@ -49,7 +49,10 @@
         const data = await imagesResponse.json();
         const imageFilenames = data
           .map((item) => item.name)
-          .filter(item => item !== "metadata.json");
+          .filter(item => item !== "metadata.json" && 
+                  item !== "thumbnail.png" && 
+                  item.split('.')[1] !== 'txt')
+          ;
 
         const metadata = await metadataResponse.json();
         imageFilenames["metadata"] = metadata;
