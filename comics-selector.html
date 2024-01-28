@@ -95,9 +95,8 @@
 
     const fetchText = async (folderName, comicName) => {
       const txtfileName = comicName.split('.')[0] + '.txt'
-      const fileName = `comics/${folderName}/${txtfileName}`;
       try {
-        const textResult = await fetch(`https://raw.githubusercontent.com/${accountName}/${repoName}/main/comics/${folderName}/${fileName}`);
+        const textResult = await fetch(`https://raw.githubusercontent.com/${accountName}/${repoName}/main/comics/${folderName}/${txtfileName}`);
         return textResult.text();
       } catch(e) {
         return ''
