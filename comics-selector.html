@@ -23,7 +23,6 @@
   </div>
 
   <div id="gallery" />
-  <div id="bonus-text" />
 
   <script>
     const galleryElement = document.getElementById("gallery");
@@ -78,10 +77,9 @@
 
       fetchText(imageFilenames.metadata.folderName, imageFilenames[currentImageIndex])
         .then(text => {
-          textElement.innerHTML = "";
           const pNode = document.createElement("p");
           pNode.innerText=text;
-          textElement.appendChild(pNode);
+          document.appendChild(pNode);
         });
 
       const url = new URL(window.location);
