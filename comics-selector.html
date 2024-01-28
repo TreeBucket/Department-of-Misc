@@ -79,7 +79,7 @@
         .then(text => {
           const pNode = document.createElement("p");
           pNode.innerText=text;
-          document.appendChild(pNode);
+          galleryElement.appendChild(pNode);
         });
 
       const url = new URL(window.location);
