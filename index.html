@@ -10,7 +10,11 @@
 </head>
 <body>
   <h1>THE DEPARTMENT OF MISC: comics by Tree Bucket</h1>
-  
+  <div>
+    These comics are by Tree bucket! If you like them, drop her a line at 
+    <a href="mailto:throwawayaccount@hotmail.com">throwawayaccount@hotmail.com</a>
+  </div>
+
   <ul id="comic" />
   
   <script>
@@ -41,15 +45,23 @@
       comics.forEach(comic => {
         const liElement = document.createElement("li");
         const linkElement = document.createElement("a");
+        
         linkElement.href=`comics-selector?comic=${comic.folderName}&id=0`;
-        linkElement.innerText=`${comic.title}`;
+        if(comic.thumbnail) {
+          const imgElement = document.createElement("img");
+          imgElement.src = `comics/${comic.folderName}/thumbnail.png`
+          imgElement.style = "padding-right: 10px;"
+          linkElement.appendChild(imgElement);
+        }
+        const spanElement = document.createElement("span");
+        spanElement.innerText=`${comic.title}`;
+        linkElement.appendChild(spanElement);
 
         const pareElement = document.createElement("p");
         pareElement.innerText = comic.description;
 
         liElement.appendChild(linkElement)
         liElement.appendChild(pareElement)
-        console.log(liElement)
         comicsElement.appendChild(liElement)
       });
       
