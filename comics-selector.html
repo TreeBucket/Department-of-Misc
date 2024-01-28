@@ -90,12 +90,12 @@
       displayImage(imageFilenames);
     };
 
-    const fetchText = async (filename) => {
-      const txtfileName = imageFilenames[currentImageIndex].split('.')[0] + '.txt'
-      const filename = `comics/${imageFilenames.metadata.folderName}/${txtfileName}`;
+    const fetchText = async (comicName) => {
+      const txtfileName = comicName.split('.')[0] + '.txt'
+      const fileName = `comics/${imageFilenames.metadata.folderName}/${txtfileName}`;
       try {
-        const textResult = await fetch(`https://raw.githubusercontent.com/${accountName}/${repoName}/main/comics/${comic}/metadata.json`);
-        return textResult;
+        const textResult = await fetch(`https://raw.githubusercontent.com/${accountName}/${repoName}/main/comics/${comic}/${fileName}`);
+        return textResult.text();
       } catch(e) {
         return ''
       }
