@@ -1,5 +1,6 @@
 {
     "title": "The Weather Bureau",
     "description": "Currently nothing more than the first page of a projected 25-page comic. But maybe having it here will motivate me to finish it...?",
-    "folderName": "weather"
+    "folderName": "weather",
+    "thumbnail": true
 }
