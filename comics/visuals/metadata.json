@@ -1,5 +1,6 @@
 {
     "title": "The Avigraphs",
     "description": "A work of art and science: what happens when birds swap colours with each other? There are Avigraphs for Australian, New Zealand, European and North American bird species.",
-    "folderName": "visuals"
+    "folderName": "visuals",
+    "thumbnail": true
 }
