@@ -1,5 +1,6 @@
 {
     "title": "Once-off comics",
     "description": "Turtle curses! The Goddess of Wifi! Carnivorous plants with rockets! These are a bunch of entirely unrelated single-page comics.",
-    "folderName": "onceoff"
+    "folderName": "onceoff",
+    "thumbnail": true
 }
