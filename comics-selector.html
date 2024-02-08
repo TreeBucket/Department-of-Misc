@@ -26,7 +26,10 @@
 
   <script>
     const galleryElement = document.getElementById("gallery");
+    const textElement = document.getElementById("bonus-text");
+
     let currentImageIndex = 0;
+    const [url, accountName, repoName] = window.location.toString().match(/https:\/\/([^\.]*)\.github\.io\/([^\/]*)/)
 
     const updateTitle = (title) => {
       document.title = title;
@@ -35,7 +38,6 @@
 
     const fetchImages = async () => {
       try {
-        const [url, accountName, repoName] = window.location.toString().match(/https:\/\/([^\.]*)\.github\.io\/([^\/]*)/)
         const params = new URLSearchParams(window.location.search);        
         const comic = params.get("comic");
         const comicId = params.get("id");
@@ -46,7 +48,10 @@
         const data = await imagesResponse.json();
         const imageFilenames = data
           .map((item) => item.name)
-          .filter(item => item !== "metadata.json");
+          .filter(item => item !== "metadata.json" && 
+                  item !== "thumbnail.png" && 
+                  item.split('.')[1] !== 'txt')
+          ;
 
         const metadata = await metadataResponse.json();
         imageFilenames["metadata"] = metadata;
@@ -69,6 +74,14 @@
       const imgElement = document.createElement("img");
       imgElement.src = `comics/${imageFilenames.metadata.folderName}/${imageFilenames[currentImageIndex]}`;
       galleryElement.appendChild(imgElement);
+
+      fetchText(imageFilenames.metadata.folderName, imageFilenames[currentImageIndex])
+        .then(text => {
+          const pNode = document.createElement("p");
+          pNode.innerText=text;
+          galleryElement.appendChild(pNode);
+        });
+
       const url = new URL(window.location);
       url.searchParams.set("id", currentImageIndex);
       history.pushState({}, "", url);
@@ -83,6 +96,16 @@
       currentImageIndex = (currentImageIndex - 1 + imageFilenames.length) % imageFilenames.length;
       displayImage(imageFilenames);
     };
+
+    const fetchText = async (folderName, comicName) => {
+      const txtfileName = comicName.split('.')[0] + '.txt'
+      try {
+        const textResult = await fetch(`https://raw.githubusercontent.com/${accountName}/${repoName}/main/comics/${folderName}/${txtfileName}`);
+        return textResult.text();
+      } catch(e) {
+        return ''
+      }
+    }
 
     fetchImages()
       .then((imageFilenames) => {
