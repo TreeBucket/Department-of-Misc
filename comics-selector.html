@@ -101,7 +101,7 @@
       const txtfileName = comicName.split('.')[0] + '.txt'
       try {
         const textResult = await fetch(`https://raw.githubusercontent.com/${accountName}/${repoName}/main/comics/${folderName}/${txtfileName}`);
-        return textResult.text();
+        return textResult.status === 200 ? textResult.text() : '';
       } catch(e) {
         return ''
       }
